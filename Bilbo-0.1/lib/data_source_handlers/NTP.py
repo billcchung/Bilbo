@@ -10,8 +10,14 @@ __author__ = 'cchung'
 import time
 import json
 import os
+# from .Base import BaseDataSourceHandler
+from .. import utils
 
-from ..util import util
+
+class NTP(object):
+
+    def __init__(self, abc):
+        pass
 
 
 def main(url, dataId, format, name, replace='', **kwargs):
@@ -23,7 +29,7 @@ def main(url, dataId, format, name, replace='', **kwargs):
     while True:
         try:
             print url.format(**locals())
-            request = util.json_parser(url.format(**locals()), **kwargs)
+            request = utils.util.json_parser(url.format(**locals()), **kwargs)
             skip += top
             results += request
             if len(request) < top:
@@ -31,8 +37,9 @@ def main(url, dataId, format, name, replace='', **kwargs):
         except Exception, e:
             print e
             time.sleep(sleep_sec)
-    util.write_result(results, dataId+name+'.json')
-    print len(json.load(open(os.path.join(results_dir,dataId+name+'.json'))))
+    utils.util.write_result(results, dataId+name+'.json')
+    print len(json.load(open(os.path.join(results_dir, dataId+name+'.json'))))
     return 0
+
 
 
