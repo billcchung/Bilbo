@@ -61,13 +61,6 @@ def main(config_file, out_file):
     yaml.dump(meta, open(out_file, 'a+'))
 
 
-        # print soup.find_all('td')[11].string
-        # for i in xrange(len(soup.find_all('td'))):
-        #     if soup.find_all('td')[i].string:
-        #         print i, re.sub(ur'[\u3000\.\s]+', '', soup.find_all('td')[i].string)
-    # for k,v in config.iteritems():
-    #     print k, v
-
 if __name__ == "__main__":
     p = optparse.OptionParser()
     default_config = os.path.join(os.path.dirname(__file__), '..', 'config',

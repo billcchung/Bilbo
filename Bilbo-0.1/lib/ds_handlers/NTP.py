@@ -10,13 +10,17 @@ __author__ = 'cchung'
 import time
 import json
 import os
-# from .Base import BaseDataSourceHandler
+import ds_base
 from .. import utils
 
 
-class NTP(object):
+class NTP(ds_base.BaseDataSourceHandler):
 
     def __init__(self, abc):
+        super(NTP, self).__init__()
+        pass
+
+    def update_meta(self):
         pass
 
 

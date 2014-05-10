@@ -5,7 +5,7 @@ __author__ = 'cchung'
 import abc
 
 class BaseDBHandler(object):
-    __metaclass__  = abc.ABCMeta
+    __metaclass__ = abc.ABCMeta
 
     def __init__(self, host, port, auth):
         self.host = host
