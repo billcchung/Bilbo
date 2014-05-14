@@ -2,4 +2,4 @@
 
 __author__ = 'cchung'
 
-__all__ = ['NTP', 'Base']
+__all__ = ['TP','NTP']

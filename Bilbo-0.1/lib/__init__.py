@@ -2,4 +2,4 @@
 
 __author__ = 'cchung'
 
-__all__ = ['db_handlers', 'ds_handlers', 'util']
+__all__ = ['db_handlers', 'ds_handlers', 'utils']

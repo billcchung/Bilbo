@@ -7,7 +7,8 @@ import sys
 import re
 import yaml
 import optparse
-import urllib2
+import urllib
+import requests
 
 from bs4 import BeautifulSoup
 
@@ -44,7 +45,7 @@ def main(config_file, out_file):
         id = data_set['url'].split('oid=')[1]
         full_url = config['baseUrl'] + data_set['url']
         print full_url
-        request = urllib2.urlopen(full_url)
+        request = urllib.urlopen(full_url)
         soup = BeautifulSoup(request)
         meta[id] = {'name': clean_special_char(get_title(soup)),
                     'data_url': {}}
@@ -64,7 +65,7 @@ def main(config_file, out_file):
 if __name__ == "__main__":
     p = optparse.OptionParser()
     default_config = os.path.join(os.path.dirname(__file__), '..', 'config',
-                                  'data_source_handlers', 'NTP.yaml')
+                                  'ds_handlers', 'NTP.yaml')
     default_out_file = os.path.join(os.path.dirname(__file__), 'out.yaml')
     p.add_option('-c', '--config', dest='config_file', default=default_config,
                  help='config file')

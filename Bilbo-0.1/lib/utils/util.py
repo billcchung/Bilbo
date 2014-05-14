@@ -1,9 +1,35 @@
 #!/usr/bin/env python
 __author__ = 'cchung'
 
+import yaml
 import urllib2
 import json
 import os
+import re
+
+## excel loader: https://pypi.python.org/pypi/xlrd
+
+
+# def next_element(soup, text):
+#     found = soup.find(text=text)
+#     if found:
+#         return found.find_parent().find_next_sibling().string
+#     else:
+#         return ''
+
+def get_next_element(soup, text):
+    found = soup.find(text=text)
+    if found:
+        return found.next_element.string
+    else:
+        return ''
+
+def clean_special_char(text, options={}):
+    # TODO: handle special char cleanup options
+    if text:
+        return re.sub(u'\u3001', ', ', re.sub(ur'[\u3000\.\s]+', '', text))
+    else:
+        return ''
 
 def read_multiline_json(filename):
     """ read multline json (dict) file to list

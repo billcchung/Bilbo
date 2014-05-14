@@ -2,4 +2,4 @@
 
 __author__ = 'cchung'
 
-__all__ = ['Base', 'MongoDb']
+__all__ = ['db_base', 'mongodb']
