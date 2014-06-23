@@ -1,0 +1,6 @@
+name: '新北市政府觀光旅遊局'
+base_url: 'http://tour.ntpc.gov.tw/'
+total_pages: 148
+
+page_url: 'page.aspx?wtp=1&wnd=138&town=NA&tag=&kw=&page={p}'
+# store_url: 'page.aspx?wtp=1&wnd=138&id={id}'

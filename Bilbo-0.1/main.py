@@ -1,6 +1,6 @@
 #!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 __author__ = 'cchung'
-
 
 import os
 import sys
@@ -9,42 +9,56 @@ import yaml
 import threading
 import optparse
 
-#sys.path.append(os.path.join(os.path.dirname(__file__), 'lib'))
-#print os.environ['PYTHONPATH']
-from lib.ds_handlers import *
-# import lib.ds_handlers.NTP
-from lib.db_handlers import *
-from lib.utils import *
+from lib import *
+print globals()
+# from lib.ds_handlers import *
+# from lib.db_handlers import *
+# from lib.utils import *
 print sys.modules[__name__]
 
-def get_data(ds_handler):
+def process_runner(ds_handler):
     """
-        Get data based on the meta
+        Process runner
     """
     while True:
         print ds_handler.db_handler
-        for dataset in ds_handler.list_datasets():
-            if dataset['last_update']-time.time() > dataset['update_frequency']:
-                ds_handler.get_data(dataset['id'])
-                # the update_time will be the real time that we get the data
-                ds_handler.update_meta(dataset['id'],
-                                       {'last_update': time.time()})
 
+        ## update meta
+        # TODO: if contorller.should_update_meta(ds_handler.)
+        #ds_handler.update_all_meta()
+        # ds_handler.update_all_datasets()
+        # print len(ds_handler.get_dataset(dataset_id='ws_announce_activity', formats=['json']))
+        ds_handler.get_dataset()
+        raise
+
+        ## udpate datasets
+
+        #ds_handler.update_all_datasets()
+        #for dataset in ds_handler.list_datasets():
+        #    print dataset
+        #    if dataset['last_update']-time.time() > dataset['update_frequency']:
+        #        print dataset
+                # ds_handler.update_dataset(dataset['id'])
+                # # the update_time will be the real time that we get the data
+                # ds_handler.update_meta(dataset['id'], {'last_update': time.time()})
 
 def main(config_file):
     config = yaml.load(open(config_file))
+    # TODO: make a controller
     threads = []
-    for data_source in config['data_sources']:
-        db_handler = mongodb.MongoDb()
-        ds_handler = getattr(globals()[data_source['name']],
-                                       data_source['name'])(db_handler)
+    for ds in config['data_sources']:
+        db_handler = db_handlers.mongodb.MongoDb()
 
+        # ds_handler = getattr(globals()[ds['name']], ds['name'])(db_handler)
+        ds_handler = getattr(getattr(ds_handlers, ds['name']),
+                             ds['name'])(db_handler)
         # ds_handler = eval('lib.ds_handlers.NTP.NTP(db_handler)')
-        threads += [threading.Thread(target=get_data, args=(ds_handler,))]
+        threads += [threading.Thread(target=process_runner, args=(ds_handler,))]
 
-    for thread in threads: thread.start()
-    for thread in threads: thread.join()
-
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
     return 0
 
 

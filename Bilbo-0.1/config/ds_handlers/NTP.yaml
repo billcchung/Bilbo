@@ -3,40 +3,60 @@ base_url: 'http://data.ntpc.gov.tw'
 meta_url: '/NTPC/od/query?_m=detail&'
 
 data_formats: ['json', 'xml', 'csv', 'orgFile']
-data_url: '/NTPC/od/data/api/?$'
+data_url: '/NTPC/od/data/api/{id}/?$format={format}&$top={top}&$skip={skip}&$orderby={orderby}&$filter={field}eq{value}'
 #data_url_suffix: '?$format=json'
+split_text_fields: ['tag', 'field_def']
 meta_fields:
-  - name: '分　　類：'
-    alias: 'category'
-  - name: '標　　籤：'
-    alias: 'tag'
-  - name: '提供單位：'
-    alias: 'provider'
-  - name: '上架日期：'
-    alias: 'online_date'
-  - name: '更新頻率：'
-    alias: 'update_frequency'
-  - name: '更新日期：'
-    alias: 'update_date'
-  - name: '紀錄筆數：'
-    alias: 'records'
-  - name: '參考網址：'
-    alias: 'ref_url'
-  - name: '地圖連結：'
-    alias: 'ref_map_url'
-  - name: '欄位定義：'
-    alias: 'field_def'
-  - name: '詮釋資料：'
-    alias: 'description'
+  - name:  'category'
+    alias: '分　　類：'
+  - name:  'tag'
+    alias: '標　　籤：'
+  - name:  'provider'
+    alias: '提供單位：'
+  - name:  'online_date'
+    alias: '上架日期：'
+  - name:  'update_freq'
+    alias: '更新頻率：'
+  - name:  'update_date'
+    alias: '更新日期：'
+  - name:  'records'
+    alias: '紀錄筆數：'
+  - name:  'ref_url'
+    alias: '參考網址：'
+  - name:  'ref_map_url'
+    alias: '地圖連結：'
+  - name:  'field_def'
+    alias: '欄位定義：'
+  - name:  'description'
+    alias: '詮釋資料：'
+  - name:  'desc_file'
+    alias: '說明檔案：'
+
 
 ## oid = meta id
 datasets:
-  - oid: A9D43291-097E-4624-8A6E-683FD58FC1AD
+  - oid: A9D43291-097E-4624-8A6E-683FD58FC1AD # 新北市103年公告土地現值
+    skip: True
+    fields:
+      - name:
+        alias:
   - oid: 04958686-1B92-4B74-889D-9F34409B272B
   - oid: 6DCFF24A-838C-40FB-A9DF-F1160AFAFE84
+    fields:
+      - name:  'id'
+        alias: 'name'
   - oid: 96B6101B-C033-4834-8BD5-E312651DB7A0
+
   - oid: BF90FA7E-C358-4CDA-B579-B6C84ADC96A1
+    fields:
+      - name: 'id'
+        alias: 'address'
+
   - oid: 54172EE2-975D-44C6-9465-9719E5EF5264
+    fields:
+      - name: 'id'
+        alias: 'G_sn'
+
   - oid: EE5FFEC7-A98C-4A9C-911F-D4EBF93E28E0
   - oid: 63BCE802-3332-4783-AADF-E71E56A25C9E
   - oid: 8F29E30A-02B4-460B-B2E1-C1814163BBDE
@@ -47,6 +67,7 @@ datasets:
   - oid: 5B5E62AB-77FB-4F61-A224-DB11EE6C945A
   - oid: A886239B-D7C1-4309-870F-E0F64D088025
   - oid: A93D291D-18E4-4C16-A676-AF29CFE07CB6
+    skip: True
   - oid: B1464EF0-9C7C-4A6F-ABF7-6BDF32847E68
   - oid: F21D4BB9-E8F8-47D7-94AD-D4FBC09CBBBA
   - oid: 365714DB-5840-46E6-AD3F-CD5BF6460D20
@@ -63,6 +84,7 @@ datasets:
   - oid: 18C978D6-96CF-4C8D-BACB-2348DDED4A76
   - oid: 69CECDB0-7796-48DF-84E5-99E4F1274245
   - oid: 2127EC74-E01D-4770-84A7-70F15958A0CE
+    skip: True
   - oid: 95C0E274-5869-4260-96B1-E355B27BEECB
   - oid: C1487D7B-FFF1-43D3-A2CE-4716EAB4D286
   - oid: 9E715F5F-B839-4C29-8C5C-FB4B40362131
@@ -70,6 +92,7 @@ datasets:
   - oid: DEB37D64-264A-48F3-B3D6-978A98D22C68
   - oid: 67165285-BD89-4C98-8C93-17C7B83B18BD
   - oid: 25C3D222-64C6-4F0C-8073-F707973C75E5
+    skip: True
   - oid: 029E3FC2-1927-4534-8702-DA7323BE969B
   - oid: B4D1A981-79B8-4E8B-8C69-1BDFC3D6C79C
   - oid: 99F3FF6E-0352-4399-A726-775AB765A1DC
@@ -91,6 +114,7 @@ datasets:
   - oid: 08DF50E4-2AB6-47B6-91B6-FA9AE08A30BD
   - oid: D8EB898F-6C59-4689-9191-48DBBEF16606
   - oid: 18BC32E2-DDBA-487F-BBF2-EAD648289E33
+    skip: True
   - oid: 0D4ABD43-1F53-4F7A-BCE4-58C34E7BA6A6
   - oid: 38773023-E53E-4509-BFA1-64187109C09F
   - oid: FCED1D23-3C3D-45F4-B555-6B950E33311D
@@ -101,6 +125,7 @@ datasets:
   - oid: 6E1CE5FA-3976-4E3E-B981-83990D58502E
   - oid: 701C32D0-F7A0-4AAA-9C46-958308A6DF2A
   - oid: 37E84742-1392-43FB-8E7C-627147903731
+    skip: True
   - oid: E461BC62-34D2-42C5-A871-F2FC2FB88D01
   - oid: 9987DC63-2C8D-4C75-903D-6EBD82D1792D
   - oid: DC6F9D55-A41A-4435-B416-593F2EBC6751
@@ -114,9 +139,14 @@ datasets:
   - oid: 5FFC479A-1E48-401D-A403-7B355960E820
   - oid: 7718C478-8C01-4570-8B12-643DA2285DEC
   - oid: 9C20B8CF-0E1F-4828-9E73-562F4F4DE1F0
+    overwrite_fields:
+      - field: 'formats'
+        value: ['xml', 'csv']
+
   - oid: EF764652-284E-4137-A01D-CEFDFB76A3D8
   - oid: 7101FA3C-5BF4-42AB-9397-07E738178198
   - oid: 214634CA-3C71-4FC8-8F46-FAFFE97F23FF
+    skip: True
   - oid: D0926D6E-5DA3-4221-B78B-7A1DAA76B229
   - oid: 0D07DB17-675D-4104-B809-62079BF061DA
   - oid: 61C99F42-8A90-4ADC-9C40-BA9E0EA097AA
@@ -182,10 +212,12 @@ datasets:
   - oid: 9A34E36F-6AC2-4C1F-A5AF-7F20D740A2E0
   - oid: 9B56B783-C4D3-4226-A257-78F3B53DFAFF
   - oid: BFC99274-1028-4892-8E66-8B1E9C80B8F1
+    skip: True
   - oid: 4A03827A-588B-4058-AB21-EC02283E2BB7
   - oid: EB0F93A8-E356-4399-AF6E-35C56BA31E8D
   - oid: C18F02CF-47B7-4CED-98DF-CE9A56D28262
   - oid: 1509DE6E-C7EC-489B-8C8D-5BFA817FC92C
+    skip: True
   - oid: 7D55D083-D335-43FA-ACAE-5E7D211EE366
   - oid: 0351D41C-EF33-44DA-BC3C-A64AF58DDB91
   - oid: 22ECD1E6-842B-419B-B78A-C60482AF298A
@@ -213,13 +245,18 @@ datasets:
   - oid: 0BB279B7-592D-4A8B-B128-24258CED5E60
   - oid: 52894923-5B75-4C06-8370-1ECCAE08ED7B
   - oid: 7494DECF-639D-492F-AECA-BB077470F23D
+    skip: True
   - oid: 96B101B4-CAAF-419B-BE87-7DE41FAD4DF2
+    skip: True
   - oid: D75D0982-2B8D-489F-BF9B-F08D62DA3842
+    skip: True
   - oid: 3B98C75C-5C75-4CC0-B46C-B8B804EE20F5
   - oid: FCA0A6D2-E42B-4E27-B7D2-90501FC29161
   - oid: C16FE2D6-5268-466D-8193-57945787576D
   - oid: 767013F5-71DB-479A-8ED2-5FC59F4332F6
+    skip: True
   - oid: 7415EF49-C97B-4E5E-A3B0-F0C13BD60511
+    skip: True
   - oid: F6E7E341-222D-4DA4-BFB3-A5447E06F43C
   - oid: 89E67988-38D7-4A08-AF6E-9AAF333DE8AC
   - oid: FFD0CA1E-12CC-4160-A2A5-81E7A20BFFFC
@@ -233,11 +270,14 @@ datasets:
   - oid: 534E5E0F-2477-47DA-95BE-F5BBD5CC8569
   - oid: C94F42B8-FCCF-466C-9643-13CBE223662E
   - oid: 96806832-AB39-46A4-9E92-81D6FF501FEA
+    skip: True
   - oid: 6C2C5A68-BCD9-44A9-9E15-F17411116D9D
   - oid: A5F7CEE6-2DC0-4FA3-88D2-12E94C313F40
+    skip: True
   - oid: E310FED6-CDF6-4339-9E61-42E2051863D4
   - oid: 54E214D6-39BD-4486-8050-2D27A32DCFC0
   - oid: 1583E041-9181-4BAE-BF90-F014C6F928F9
+    skip: True
   - oid: EB703F46-7709-4ADD-92EA-193015EE7CFC
 
 

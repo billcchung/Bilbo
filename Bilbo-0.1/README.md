@@ -2,8 +2,9 @@
 
 # Prerequisites
 - Python 2.7.x
-- PyYaml
-- PyMongo
+- PyYaml (python-yaml)
+- PyMongo (python-pymongo)
+- Beautiful Soup (python-bs4)
 
 # How to add a data source handler (ds_handler)
 

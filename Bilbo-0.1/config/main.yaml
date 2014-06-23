@@ -1,7 +1,8 @@
 
 
 data_sources:
-  - name: 'NTP'
+#  - name: 'NTP'
+  - name: 'TOUR_NTP'
 #  - name: 'TP'
 #  - name: 'KH'
 #  - name: 'TC'

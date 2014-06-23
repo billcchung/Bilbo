@@ -1,15 +1,21 @@
 #!/usr/bin/env python
+# -*- coding: UTF-8 -*-
 __author__ = 'cchung'
 
 import abc
+import sys
+import traceback
 import time
 import json
 import os
 import yaml
 import urllib
+import logging
 import re
 from bs4 import BeautifulSoup
-from .. import utils
+from ..utils import *
+import unittest
+
 
 class BaseDataSourceHandler:
     __metaclass__ = abc.ABCMeta
