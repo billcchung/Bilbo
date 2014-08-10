@@ -15,20 +15,19 @@ class TOUR_NTP(BaseDataSourceHandler):
     def __init__(self, db_handler='', config_file=''):
         super(TOUR_NTP, self).__init__(db_handler, config_file)
         self.logger = logging.getLogger('global')
-        self.db_handler.db = 'TOUR_NTP'
         # self.db_handler.db.authenticate(os.environ['mongodb_user'],
         #                                 os.environ['mongodb_pass'])
 
-        self.db_handler.table = 'TOUR_NTP_FOOD'
+        self.db_handler.table = 'locations'
         css_prefix = 'tr#ctl07_ctl10_pageControl_TR_SPG_'
         css_suffix = ' td.specpage_data_info_content'
         self.css_selector = {
-            'name'      : 'div.specpage_data_title strong',
-            'desc'      : 'div.specpage_data_desc',
-            'addr'      : css_prefix + 'ADDR'     + css_suffix,
-            'map'       : css_prefix + 'MAP'      + css_suffix,
-            'tel'       : css_prefix + 'TEL'      + css_suffix,
-            'open_hours': css_prefix + 'OPENTIME' + css_suffix,
+            'name'            : 'div.specpage_data_title strong',
+            'desc'            : 'div.specpage_data_desc',
+            'full_address'    : css_prefix + 'ADDR'     + css_suffix,
+            'coordinate'      : css_prefix + 'MAP'      + css_suffix,
+            'tel'             : css_prefix + 'TEL'      + css_suffix,
+            'open_hours'      : css_prefix + 'OPENTIME' + css_suffix,
         }
 
     @classmethod
@@ -82,9 +81,18 @@ class TOUR_NTP(BaseDataSourceHandler):
                 store_url = self.get_store_url(s.a['href'])
                 bs = BeautifulSoup(urllib.urlopen(store_url))
                 r ={k:self.select(bs, v) for (k,v) in self.css_selector.items()}
+
+                alter_addr = r'(新址)'
+                if alter_addr in r['full_address']:
+                    r.update({'full_address':
+                                  r['full_address'].split(alter_addr)[1]})
+
                 r.update({
                     'id': store_url.split('&id=')[1],
                     'url': store_url,
+                    'city':'',
+                    'district':'',
                 })
+
                 print r['url']
                 self.update_data(r)

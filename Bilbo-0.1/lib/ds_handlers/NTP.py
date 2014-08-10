@@ -18,7 +18,6 @@ class NTP(BaseDataSourceHandler):
     def __init__(self, db_handler='', config_file=''):
         super(NTP, self).__init__(db_handler, config_file)
         self.logger = logging.getLogger('global')
-        self.db_handler.db = 'NTP'
         # self.db_handler.db.authenticate(os.environ['mongodb_user'],
         #                                 os.environ['mongodb_pass'])
 
@@ -71,7 +70,7 @@ class NTP(BaseDataSourceHandler):
         for f in self.config['meta_fields']:
             value = util.get_next_element(soup, f['alias'])
             # print value
-            if f['name'] in self.config['split_text_fields']:
+            if f['name'] in self.config['split_ text_fields']:
                 value = util.split_text(value)
             elif f['name'] in ['ref_url', 'desc_file']:
                 v = soup.find(text=f['alias'])
@@ -94,10 +93,12 @@ class NTP(BaseDataSourceHandler):
             meta.update({f['field']: f['value']})
         return meta
 
+
     def get_meta_url(self, oid):
         return (self.config['base_url'] +
                 self.config['meta_url'] +
                 urllib.urlencode({'oid': oid}))
+
 
     def get_title(self, soup, oid):
         if soup.find(id='title').string:
@@ -106,7 +107,7 @@ class NTP(BaseDataSourceHandler):
             return soup.find(id='title_0').string
         else:
             self.logger.warning("No title for {u}".format(
-                                 u=self.get_meta_url(oid)))
+                                u=self.get_meta_url(oid)))
             return ''
             # raise NoAttributeError("No title for {u}".format(
             #                        u=get_meta_url(oid)))
@@ -125,7 +126,7 @@ class NTP(BaseDataSourceHandler):
             return re.findall('/NTPC/od/data/api/(\S+)/;', str(urls[0]))[0]
         else:
             self.logger.warning("No dataset_id for {u}".format(
-                                 u=self.get_meta_url(oid)))
+                                u=self.get_meta_url(oid)))
             return ''
             # raise NoAttributeError("No dataset_id for {t}".format(
             #                        t=self.get_meta_url(oid)))
@@ -137,7 +138,7 @@ class NTP(BaseDataSourceHandler):
     def update_all_datasets(self, options=''):
         for d in self.list_meta():
             self.logger.info("getting dataset {d}, formats: {f}".format(
-                              d=d['dataset']['id'], f=d['dataset']['formats']))
+                             d=d['dataset']['id'], f=d['dataset']['formats']))
             self.get_dataset(dataset_id=d['dataset']['id'],
                              formats=d['dataset']['formats'])
             #print t
@@ -145,8 +146,8 @@ class NTP(BaseDataSourceHandler):
 
 
     def update_dataset(self, dataset_id, data, force=False):
-        if not self.db_handler.table == dataset_id:
-            self.db_handler.table = dataset_id
+        if not self.db_handler.table == 'locations':
+            self.db_handler.table = 'locations'
         return self.db_handler.table.insert(data)
 
 
@@ -172,7 +173,7 @@ class NTP(BaseDataSourceHandler):
                 self.logger.exception("Except: parsing {d}, format {f}, {e}".format(
                                   d=dataset_id, f=format, e=e))
         self.logger.error("Failed to parse {d} from formats: {f}".format(
-                           d=dataset_id, f=formats))
+                          d=dataset_id, f=formats))
         # print "dataset"
         # print self.parse_dataset(dataset_id,
         #                           self.db_handler.table.find_one(
@@ -188,7 +189,7 @@ class NTP(BaseDataSourceHandler):
         url = (self.config['base_url'] +
                self.config['data_url'].format(**opt))
         self.logger.debug("Getting dataset {i} from url: {u}".format(
-                           i=dataset_id, u=url))
+                          i=dataset_id, u=url))
         return url
 
     def parse_dataset(self, dataset_id, format, options):
@@ -203,7 +204,7 @@ class NTP(BaseDataSourceHandler):
             pass
         else:
             self.logger.error("dataset format {f} is not recognized".format(
-                               f=format))
+                              f=format))
         return dataset
 
     #### datasets -> data ####

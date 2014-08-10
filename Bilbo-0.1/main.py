@@ -48,6 +48,7 @@ def main(config_file):
     threads = []
     for ds in config['data_sources']:
         db_handler = db_handlers.mongodb.MongoDb()
+        db_handler.db = 'Loc'
 
         # ds_handler = getattr(globals()[ds['name']], ds['name'])(db_handler)
         ds_handler = getattr(getattr(ds_handlers, ds['name']),
